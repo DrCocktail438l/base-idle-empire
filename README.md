@@ -3,21 +3,14 @@ On-chain idle empire builder game on Base blockchain – build, upgrade, earn re
 
 # Base Idle Empire
 
-A fully on-chain idle game on Base.
+A fun on-chain idle game built on Base blockchain.
 
-Build your empire, watch resources grow, upgrade buildings and become the richest settler on Base!
+Build your empire → collect resources → upgrade buildings → grow bigger!
 
-## Features (building one by one)
-- On-chain player empire
-- Real-time resource generation
-- Multiple buildings & upgrades
-- Leaderboard coming soon
+## Current Progress
+- Project initialized
+- Core Empire smart contract created
+- Hardhat configuration added
+- Deployment script ready
 
-Built for fun + Base Guild progress.
-EOF
-
-mkdir -p contracts frontend
-
-git add .
-git commit -m "feat: initial project setup with README and gamified folder structure"
-git push origin main
+Made for Base.
