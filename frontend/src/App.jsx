@@ -8,12 +8,12 @@ function App() {
   const [labLevel, setLabLevel] = useState(0)
   const [totalClaimed, setTotalClaimed] = useState(0)
   const [prestige, setPrestige] = useState(0)
-  const [achievements, setAchievements] = useState(0)
+  const [achievements, setAchievements] = useState([])
 
   // Auto production every 3 seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      const production = Math.floor((mineLevel * 5) + (farmLevel * 4) + (labLevel * 6) * (1 + prestige * 0.3))
+      const production = Math.floor((mineLevel * 5) + (farmLevel * 4) + (labLevel * 7) * (1 + prestige * 0.4))
       if (production > 0) {
         setResources(prev => prev + production)
       }
@@ -27,26 +27,32 @@ function App() {
       alert("Please enter an empire name!")
       return
     }
-    alert(`🎉 Welcome to Base! Empire "${username}" has been founded!`)
+    alert(`🎉 Empire "${username}" founded successfully on Base!`)
   }
 
   const claimResources = () => {
-    const production = Math.floor((mineLevel * 18) + (farmLevel * 12) + (labLevel * 22))
+    const production = Math.floor((mineLevel * 20) + (farmLevel * 15) + (labLevel * 25))
     const newResources = resources + production
     setResources(newResources)
     setTotalClaimed(prev => prev + production)
-    
-    // Simple achievement system
-    if (newResources > 1000 && achievements === 0) {
-      setAchievements(1)
-      alert("🏆 Achievement Unlocked: First Millionaire!")
+
+    // Achievements
+    let newAchievements = [...achievements]
+    if (newResources >= 5000 && !achievements.includes("wealth1")) {
+      newAchievements.push("wealth1")
+      alert("🏆 Achievement Unlocked: Wealthy Settler (5,000 Resources)")
     }
-    
+    if (prestige >= 1 && !achievements.includes("prestige1")) {
+      newAchievements.push("prestige1")
+      alert("🏆 Achievement Unlocked: First Prestige!")
+    }
+    setAchievements(newAchievements)
+
     alert(`✅ Claimed ${production} Resources!`)
   }
 
   const upgradeMine = () => {
-    const cost = Math.floor(60 + (mineLevel * 30))
+    const cost = Math.floor(70 + (mineLevel * 35))
     if (resources >= cost) {
       setResources(resources - cost)
       setMineLevel(mineLevel + 1)
@@ -57,7 +63,7 @@ function App() {
   }
 
   const upgradeFarm = () => {
-    const cost = Math.floor(90 + (farmLevel * 35))
+    const cost = Math.floor(100 + (farmLevel * 40))
     if (resources >= cost) {
       setResources(resources - cost)
       setFarmLevel(farmLevel + 1)
@@ -68,7 +74,7 @@ function App() {
   }
 
   const upgradeLab = () => {
-    const cost = Math.floor(150 + (labLevel * 45))
+    const cost = Math.floor(180 + (labLevel * 50))
     if (resources >= cost) {
       setResources(resources - cost)
       setLabLevel(labLevel + 1)
@@ -79,17 +85,17 @@ function App() {
   }
 
   const prestigeReset = () => {
-    if (resources < 1500) {
-      alert("You need at least 1500 resources to prestige!")
+    if (resources < 2000) {
+      alert("You need at least 2000 resources to prestige!")
       return
     }
-    if (window.confirm("Prestige will reset buildings but give strong permanent bonuses. Continue?")) {
+    if (window.confirm("Prestige will reset your buildings but give strong permanent bonuses. Continue?")) {
       setPrestige(prev => prev + 1)
       setResources(100)
       setMineLevel(1)
       setFarmLevel(0)
       setLabLevel(0)
-      alert(`🌟 Prestige ${prestige + 1} Complete! Permanent multiplier increased!`)
+      alert(`🌟 Prestige ${prestige + 1} achieved! Your power grows stronger!`)
     }
   }
 
@@ -101,7 +107,7 @@ function App() {
 
         <div className="bg-gray-800/70 border border-emerald-700 rounded-3xl p-6 mb-8 text-center">
           <p className="text-xl">Empire: <span className="text-emerald-400 font-bold">{username || "Unknown Settler"}</span></p>
-          <p className="text-sm text-gray-400">Prestige: {prestige} • Achievements: {achievements} • Total Earned: {totalClaimed}</p>
+          <p className="text-sm text-gray-400">Prestige Level: {prestige} • Achievements: {achievements.length}</p>
         </div>
 
         <div className="bg-gray-800 rounded-3xl p-12 text-center mb-12 border-2 border-emerald-600">
@@ -149,8 +155,8 @@ function App() {
           </button>
         </div>
 
-        <div className="text-center text-xs text-gray-500 mt-16">
-          Auto production every 3 seconds • Achievements & Prestige added
+        <div className="text-center mt-12 text-sm text-gray-400">
+          Auto resources every 3 seconds • More upgrades & features coming soon
         </div>
       </div>
     </div>
