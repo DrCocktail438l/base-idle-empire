@@ -13,7 +13,7 @@ function App() {
   // Auto production every 3 seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      const production = Math.floor((mineLevel * 5) + (farmLevel * 4) + (labLevel * 7) * (1 + prestige * 0.4))
+      const production = Math.floor((mineLevel * 6) + (farmLevel * 5) + (labLevel * 8) * (1 + prestige * 0.5))
       if (production > 0) {
         setResources(prev => prev + production)
       }
@@ -27,24 +27,20 @@ function App() {
       alert("Please enter an empire name!")
       return
     }
-    alert(`🎉 Empire "${username}" founded successfully on Base!`)
+    alert(`🎉 Empire "${username}" is now officially part of the Base ecosystem!`)
   }
 
   const claimResources = () => {
-    const production = Math.floor((mineLevel * 20) + (farmLevel * 15) + (labLevel * 25))
+    const production = Math.floor((mineLevel * 22) + (farmLevel * 18) + (labLevel * 28))
     const newResources = resources + production
     setResources(newResources)
     setTotalClaimed(prev => prev + production)
 
     // Achievements
     let newAchievements = [...achievements]
-    if (newResources >= 5000 && !achievements.includes("wealth1")) {
-      newAchievements.push("wealth1")
-      alert("🏆 Achievement Unlocked: Wealthy Settler (5,000 Resources)")
-    }
-    if (prestige >= 1 && !achievements.includes("prestige1")) {
-      newAchievements.push("prestige1")
-      alert("🏆 Achievement Unlocked: First Prestige!")
+    if (newResources >= 10000 && !achievements.includes("wealth2")) {
+      newAchievements.push("wealth2")
+      alert("🏆 Achievement Unlocked: Base Tycoon (10,000 Resources)")
     }
     setAchievements(newAchievements)
 
@@ -52,7 +48,7 @@ function App() {
   }
 
   const upgradeMine = () => {
-    const cost = Math.floor(70 + (mineLevel * 35))
+    const cost = Math.floor(80 + (mineLevel * 40))
     if (resources >= cost) {
       setResources(resources - cost)
       setMineLevel(mineLevel + 1)
@@ -63,7 +59,7 @@ function App() {
   }
 
   const upgradeFarm = () => {
-    const cost = Math.floor(100 + (farmLevel * 40))
+    const cost = Math.floor(110 + (farmLevel * 45))
     if (resources >= cost) {
       setResources(resources - cost)
       setFarmLevel(farmLevel + 1)
@@ -74,7 +70,7 @@ function App() {
   }
 
   const upgradeLab = () => {
-    const cost = Math.floor(180 + (labLevel * 50))
+    const cost = Math.floor(200 + (labLevel * 55))
     if (resources >= cost) {
       setResources(resources - cost)
       setLabLevel(labLevel + 1)
@@ -85,37 +81,47 @@ function App() {
   }
 
   const prestigeReset = () => {
-    if (resources < 2000) {
-      alert("You need at least 2000 resources to prestige!")
+    if (resources < 2500) {
+      alert("You need at least 2500 resources to prestige!")
       return
     }
-    if (window.confirm("Prestige will reset your buildings but give strong permanent bonuses. Continue?")) {
+    if (window.confirm("Are you sure you want to Prestige? This will reset your buildings.")) {
       setPrestige(prev => prev + 1)
       setResources(100)
       setMineLevel(1)
       setFarmLevel(0)
       setLabLevel(0)
-      alert(`🌟 Prestige ${prestige + 1} achieved! Your power grows stronger!`)
+      alert(`🌟 Prestige ${prestige + 1} achieved! Your empire grows stronger!`)
     }
   }
 
+  // Fake leaderboard data
+  const leaderboard = [
+    { name: "CryptoKing", score: 45820 },
+    { name: "BaseLord", score: 32150 },
+    { name: username || "You", score: totalClaimed },
+    { name: "SettleMaster", score: 18700 },
+  ]
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white p-8">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <h1 className="text-6xl font-bold text-center mb-2">🌍 Base Idle Empire</h1>
-        <p className="text-center text-emerald-400 mb-8">On-chain Idle Game on Base</p>
+        <p className="text-center text-emerald-400 mb-10">On-chain Idle Game on Base</p>
 
         <div className="bg-gray-800/70 border border-emerald-700 rounded-3xl p-6 mb-8 text-center">
           <p className="text-xl">Empire: <span className="text-emerald-400 font-bold">{username || "Unknown Settler"}</span></p>
-          <p className="text-sm text-gray-400">Prestige Level: {prestige} • Achievements: {achievements.length}</p>
+          <p className="text-sm text-gray-400">Prestige: {prestige} • Achievements: {achievements.length} • Total Resources Earned: {totalClaimed}</p>
         </div>
 
+        {/* Resources */}
         <div className="bg-gray-800 rounded-3xl p-12 text-center mb-12 border-2 border-emerald-600">
           <div className="text-8xl mb-4">💎</div>
           <div className="text-7xl font-bold text-emerald-400">{Math.floor(resources)}</div>
           <div className="text-2xl text-gray-400">Resources</div>
         </div>
 
+        {/* Buildings */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           <div className="bg-gray-800 rounded-3xl p-8 text-center border border-orange-900">
             <div className="text-6xl mb-4">⛏️</div>
@@ -139,6 +145,19 @@ function App() {
           </div>
         </div>
 
+        {/* Leaderboard */}
+        <div className="bg-gray-800 rounded-3xl p-8 mb-12">
+          <h3 className="text-2xl font-bold text-center mb-6">🏆 Global Leaderboard</h3>
+          <div className="space-y-3">
+            {leaderboard.sort((a, b) => b.score - a.score).map((player, index) => (
+              <div key={index} className="flex justify-between bg-gray-900 px-6 py-4 rounded-2xl">
+                <span>#{index + 1} {player.name}</span>
+                <span className="text-emerald-400 font-bold">{player.score.toLocaleString()} Resources</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
         <div className="flex flex-col items-center gap-6">
           <button
             onClick={claimResources}
@@ -155,8 +174,8 @@ function App() {
           </button>
         </div>
 
-        <div className="text-center mt-12 text-sm text-gray-400">
-          Auto resources every 3 seconds • More upgrades & features coming soon
+        <div className="text-center text-xs text-gray-500 mt-16">
+          Auto production every 3 seconds • Leaderboard added
         </div>
       </div>
     </div>
