@@ -9,17 +9,18 @@ function App() {
   const [towerLevel, setTowerLevel] = useState(0)
   const [totalClaimed, setTotalClaimed] = useState(0)
   const [prestige, setPrestige] = useState(0)
-  const [achievements, setAchievements] = useState([])
+  const [isConnected, setIsConnected] = useState(false)
+  const [walletAddress, setWalletAddress] = useState('')
 
   // Auto production every 3 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       const production = Math.floor(
-        (mineLevel * 6) + 
-        (farmLevel * 5) + 
-        (labLevel * 8) + 
-        (towerLevel * 12)
-      ) * (1 + prestige * 0.5)
+        (mineLevel * 7) + 
+        (farmLevel * 6) + 
+        (labLevel * 9) + 
+        (towerLevel * 14)
+      ) * (1 + prestige * 0.6)
       
       if (production > 0) {
         setResources(prev => prev + production)
@@ -29,33 +30,30 @@ function App() {
     return () => clearInterval(interval)
   }, [mineLevel, farmLevel, labLevel, towerLevel, prestige])
 
+  const connectWallet = () => {
+    setIsConnected(true)
+    setWalletAddress("0x" + Math.random().toString(16).slice(2, 10).toUpperCase() + "...")
+    alert("✅ Wallet connected successfully! (Demo Mode)")
+  }
+
   const createEmpire = () => {
     if (username.trim() === '') {
       alert("Please enter an empire name!")
       return
     }
-    alert(`🎉 Empire "${username}" has been founded on Base!`)
+    alert(`🎉 Empire "${username}" successfully created and linked to your wallet!`)
   }
 
   const claimResources = () => {
-    const production = Math.floor((mineLevel * 25) + (farmLevel * 20) + (labLevel * 30) + (towerLevel * 40))
+    const production = Math.floor((mineLevel * 28) + (farmLevel * 22) + (labLevel * 32) + (towerLevel * 45))
     const newResources = resources + production
     setResources(newResources)
     setTotalClaimed(prev => prev + production)
-
-    // Achievements
-    let newAchievements = [...achievements]
-    if (newResources >= 20000 && !achievements.includes("tycoon")) {
-      newAchievements.push("tycoon")
-      alert("🏆 Achievement Unlocked: Base Tycoon!")
-    }
-    setAchievements(newAchievements)
-
     alert(`✅ Claimed ${production} Resources!`)
   }
 
   const upgradeMine = () => {
-    const cost = Math.floor(90 + (mineLevel * 45))
+    const cost = Math.floor(100 + (mineLevel * 50))
     if (resources >= cost) {
       setResources(resources - cost)
       setMineLevel(mineLevel + 1)
@@ -66,7 +64,7 @@ function App() {
   }
 
   const upgradeFarm = () => {
-    const cost = Math.floor(120 + (farmLevel * 50))
+    const cost = Math.floor(140 + (farmLevel * 55))
     if (resources >= cost) {
       setResources(resources - cost)
       setFarmLevel(farmLevel + 1)
@@ -77,7 +75,7 @@ function App() {
   }
 
   const upgradeLab = () => {
-    const cost = Math.floor(220 + (labLevel * 60))
+    const cost = Math.floor(250 + (labLevel * 65))
     if (resources >= cost) {
       setResources(resources - cost)
       setLabLevel(labLevel + 1)
@@ -88,7 +86,7 @@ function App() {
   }
 
   const upgradeTower = () => {
-    const cost = Math.floor(300 + (towerLevel * 80))
+    const cost = Math.floor(350 + (towerLevel * 90))
     if (resources >= cost) {
       setResources(resources - cost)
       setTowerLevel(towerLevel + 1)
@@ -99,30 +97,46 @@ function App() {
   }
 
   const prestigeReset = () => {
-    if (resources < 3000) {
-      alert("You need at least 3000 resources to prestige!")
+    if (resources < 4000) {
+      alert("You need at least 4000 resources to prestige!")
       return
     }
-    if (window.confirm("Prestige will reset all buildings. Continue?")) {
+    if (window.confirm("Prestige will reset all buildings but increase your power permanently. Continue?")) {
       setPrestige(prev => prev + 1)
-      setResources(100)
+      setResources(150)
       setMineLevel(1)
       setFarmLevel(0)
       setLabLevel(0)
       setTowerLevel(0)
-      alert(`🌟 Prestige ${prestige + 1} achieved!`)
+      alert(`🌟 Prestige ${prestige + 1} Complete!`)
     }
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white p-8">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-6xl font-bold text-center mb-2">🌍 Base Idle Empire</h1>
-        <p className="text-center text-emerald-400 mb-10">On-chain Idle Game on Base</p>
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-5xl font-bold">🌍 Base Idle Empire</h1>
+          
+          {!isConnected ? (
+            <button
+              onClick={connectWallet}
+              className="bg-blue-600 hover:bg-blue-500 px-6 py-3 rounded-2xl font-bold"
+            >
+              Connect Wallet
+            </button>
+          ) : (
+            <div className="bg-green-900 text-green-400 px-5 py-3 rounded-2xl text-sm">
+              ✅ Connected: {walletAddress}
+            </div>
+          )}
+        </div>
+
+        <p className="text-center text-emerald-400 mb-10">On-chain Idle Empire Builder on Base</p>
 
         <div className="bg-gray-800/70 border border-emerald-700 rounded-3xl p-6 mb-8 text-center">
-          <p className="text-xl">Empire: <span className="text-emerald-400 font-bold">{username || "Unknown Settler"}</span></p>
-          <p className="text-sm text-gray-400">Prestige: {prestige} • Achievements: {achievements.length} • Total Earned: {totalClaimed}</p>
+          <p className="text-xl">Empire: <span className="text-emerald-400 font-bold">{username || "Not Created"}</span></p>
+          <p className="text-sm text-gray-400">Prestige: {prestige} • Total Earned: {totalClaimed}</p>
         </div>
 
         <div className="bg-gray-800 rounded-3xl p-12 text-center mb-12 border-2 border-emerald-600">
@@ -178,7 +192,7 @@ function App() {
         </div>
 
         <div className="text-center text-xs text-gray-500 mt-16">
-          Auto production every 3 seconds • New Defense Tower added
+          Wallet connection added • Auto production every 3 seconds
         </div>
       </div>
     </div>
