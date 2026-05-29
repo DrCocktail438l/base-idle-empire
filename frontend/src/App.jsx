@@ -30,10 +30,31 @@ function App() {
     return () => clearInterval(interval)
   }, [mineLevel, farmLevel, labLevel, towerLevel, prestige])
 
+  // Save progress to localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem('baseIdleEmpire')
+    if (saved) {
+      const data = JSON.parse(saved)
+      setResources(data.resources || 100)
+      setMineLevel(data.mineLevel || 1)
+      setFarmLevel(data.farmLevel || 0)
+      setLabLevel(data.labLevel || 0)
+      setTowerLevel(data.towerLevel || 0)
+      setPrestige(data.prestige || 0)
+      setTotalClaimed(data.totalClaimed || 0)
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('baseIdleEmpire', JSON.stringify({
+      resources, mineLevel, farmLevel, labLevel, towerLevel, prestige, totalClaimed
+    }))
+  }, [resources, mineLevel, farmLevel, labLevel, towerLevel, prestige, totalClaimed])
+
   const connectWallet = () => {
     setIsConnected(true)
     setWalletAddress("0x" + Math.random().toString(16).slice(2, 10).toUpperCase() + "...")
-    alert("✅ Wallet connected! (Demo Mode on Base)")
+    alert("✅ Wallet connected successfully! (Demo Mode)")
   }
 
   const createEmpire = () => {
@@ -41,19 +62,19 @@ function App() {
       alert("Please enter an empire name!")
       return
     }
-    alert(`🎉 Empire "${username}" has been successfully created and saved on Base!`)
+    alert(`🎉 Empire "${username}" has been created and saved on Base!`)
   }
 
   const claimResources = () => {
-    const production = Math.floor((mineLevel * 30) + (farmLevel * 25) + (labLevel * 35) + (towerLevel * 50))
+    const production = Math.floor((mineLevel * 32) + (farmLevel * 26) + (labLevel * 38) + (towerLevel * 55))
     const newResources = resources + production
     setResources(newResources)
     setTotalClaimed(prev => prev + production)
-    alert(`✅ You claimed ${production} Resources!`)
+    alert(`✅ Claimed ${production} Resources!`)
   }
 
   const upgradeMine = () => {
-    const cost = Math.floor(110 + (mineLevel * 55))
+    const cost = Math.floor(120 + (mineLevel * 60))
     if (resources >= cost) {
       setResources(resources - cost)
       setMineLevel(mineLevel + 1)
@@ -64,7 +85,7 @@ function App() {
   }
 
   const upgradeFarm = () => {
-    const cost = Math.floor(160 + (farmLevel * 60))
+    const cost = Math.floor(170 + (farmLevel * 65))
     if (resources >= cost) {
       setResources(resources - cost)
       setFarmLevel(farmLevel + 1)
@@ -75,7 +96,7 @@ function App() {
   }
 
   const upgradeLab = () => {
-    const cost = Math.floor(280 + (labLevel * 70))
+    const cost = Math.floor(300 + (labLevel * 75))
     if (resources >= cost) {
       setResources(resources - cost)
       setLabLevel(labLevel + 1)
@@ -86,7 +107,7 @@ function App() {
   }
 
   const upgradeTower = () => {
-    const cost = Math.floor(400 + (towerLevel * 100))
+    const cost = Math.floor(450 + (towerLevel * 110))
     if (resources >= cost) {
       setResources(resources - cost)
       setTowerLevel(towerLevel + 1)
@@ -97,18 +118,25 @@ function App() {
   }
 
   const prestigeReset = () => {
-    if (resources < 5000) {
-      alert("You need at least 5000 resources to prestige!")
+    if (resources < 6000) {
+      alert("You need at least 6000 resources to prestige!")
       return
     }
-    if (window.confirm("Do you want to Prestige? Buildings will reset but you gain permanent power.")) {
+    if (window.confirm("Prestige will reset buildings but give you stronger permanent bonuses. Continue?")) {
       setPrestige(prev => prev + 1)
-      setResources(200)
+      setResources(250)
       setMineLevel(1)
       setFarmLevel(0)
       setLabLevel(0)
       setTowerLevel(0)
-      alert(`🌟 Prestige ${prestige + 1} achieved! Your legacy grows!`)
+      alert(`🌟 Prestige ${prestige + 1} achieved!`)
+    }
+  }
+
+  const resetProgress = () => {
+    if (window.confirm("Reset ALL progress? This cannot be undone.")) {
+      localStorage.removeItem('baseIdleEmpire')
+      window.location.reload()
     }
   }
 
@@ -119,24 +147,21 @@ function App() {
           <h1 className="text-5xl font-bold">🌍 Base Idle Empire</h1>
           
           {!isConnected ? (
-            <button
-              onClick={connectWallet}
-              className="bg-blue-600 hover:bg-blue-500 px-6 py-3 rounded-2xl font-bold transition"
-            >
+            <button onClick={connectWallet} className="bg-blue-600 hover:bg-blue-500 px-6 py-3 rounded-2xl font-bold">
               🔗 Connect Wallet
             </button>
           ) : (
-            <div className="bg-green-900/80 text-green-400 px-6 py-3 rounded-2xl text-sm font-medium">
+            <div className="bg-green-900/80 text-green-400 px-6 py-3 rounded-2xl text-sm">
               ✅ {walletAddress}
             </div>
           )}
         </div>
 
-        <p className="text-center text-emerald-400 text-xl mb-10">On-chain Idle Empire Builder</p>
+        <p className="text-center text-emerald-400 text-xl mb-10">Progress is now saved automatically</p>
 
         <div className="bg-gray-800/70 border border-emerald-700 rounded-3xl p-6 mb-8 text-center">
           <p className="text-xl">Empire: <span className="text-emerald-400 font-bold">{username || "Not Created"}</span></p>
-          <p className="text-sm text-gray-400">Prestige Level: {prestige} • Total Resources Earned: {totalClaimed}</p>
+          <p className="text-sm text-gray-400">Prestige: {prestige} • Total Earned: {totalClaimed}</p>
         </div>
 
         <div className="bg-gray-800 rounded-3xl p-14 text-center mb-12 border-2 border-emerald-600">
@@ -176,23 +201,21 @@ function App() {
         </div>
 
         <div className="flex flex-col items-center gap-6">
-          <button
-            onClick={claimResources}
-            className="bg-blue-600 hover:bg-blue-500 text-2xl px-20 py-7 rounded-3xl font-bold transition"
-          >
+          <button onClick={claimResources} className="bg-blue-600 hover:bg-blue-500 text-2xl px-20 py-7 rounded-3xl font-bold">
             ⚡ Claim Resources
           </button>
 
-          <button
-            onClick={prestigeReset}
-            className="bg-purple-600 hover:bg-purple-500 px-12 py-4 rounded-2xl font-bold text-lg"
-          >
+          <button onClick={prestigeReset} className="bg-purple-600 hover:bg-purple-500 px-12 py-4 rounded-2xl font-bold text-lg">
             🌟 Prestige Reset
+          </button>
+
+          <button onClick={resetProgress} className="text-red-400 hover:text-red-500 text-sm mt-4">
+            Reset All Progress
           </button>
         </div>
 
         <div className="text-center text-xs text-gray-500 mt-16">
-          Wallet connected • Auto production every 3 seconds • Keep building!
+          Progress is saved in browser • Keep playing!
         </div>
       </div>
     </div>
