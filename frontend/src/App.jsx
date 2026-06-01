@@ -11,26 +11,30 @@ function App() {
   const [prestige, setPrestige] = useState(0)
   const [isConnected, setIsConnected] = useState(false)
   const [walletAddress, setWalletAddress] = useState('')
+  const [resourcesPerSecond, setResourcesPerSecond] = useState(0)
 
-  // Auto production every 3 seconds
+  // Auto production every 3 seconds + calculate RPS
   useEffect(() => {
+    const productionPerTick = Math.floor(
+      (mineLevel * 8) + 
+      (farmLevel * 7) + 
+      (labLevel * 10) + 
+      (towerLevel * 16)
+    ) * (1 + prestige * 0.7)
+
+    const rps = (productionPerTick / 3).toFixed(1)
+    setResourcesPerSecond(rps)
+
     const interval = setInterval(() => {
-      const production = Math.floor(
-        (mineLevel * 8) + 
-        (farmLevel * 7) + 
-        (labLevel * 10) + 
-        (towerLevel * 16)
-      ) * (1 + prestige * 0.7)
-      
-      if (production > 0) {
-        setResources(prev => prev + production)
+      if (productionPerTick > 0) {
+        setResources(prev => prev + productionPerTick)
       }
     }, 3000)
 
     return () => clearInterval(interval)
   }, [mineLevel, farmLevel, labLevel, towerLevel, prestige])
 
-  // Save progress to localStorage
+  // Save progress
   useEffect(() => {
     const saved = localStorage.getItem('baseIdleEmpire')
     if (saved) {
@@ -62,11 +66,11 @@ function App() {
       alert("Please enter an empire name!")
       return
     }
-    alert(`🎉 Empire "${username}" has been created and saved on Base!`)
+    alert(`🎉 Empire "${username}" is now live on Base!`)
   }
 
   const claimResources = () => {
-    const production = Math.floor((mineLevel * 32) + (farmLevel * 26) + (labLevel * 38) + (towerLevel * 55))
+    const production = Math.floor((mineLevel * 35) + (farmLevel * 28) + (labLevel * 40) + (towerLevel * 60))
     const newResources = resources + production
     setResources(newResources)
     setTotalClaimed(prev => prev + production)
@@ -74,7 +78,7 @@ function App() {
   }
 
   const upgradeMine = () => {
-    const cost = Math.floor(120 + (mineLevel * 60))
+    const cost = Math.floor(130 + (mineLevel * 65))
     if (resources >= cost) {
       setResources(resources - cost)
       setMineLevel(mineLevel + 1)
@@ -85,7 +89,7 @@ function App() {
   }
 
   const upgradeFarm = () => {
-    const cost = Math.floor(170 + (farmLevel * 65))
+    const cost = Math.floor(180 + (farmLevel * 70))
     if (resources >= cost) {
       setResources(resources - cost)
       setFarmLevel(farmLevel + 1)
@@ -96,7 +100,7 @@ function App() {
   }
 
   const upgradeLab = () => {
-    const cost = Math.floor(300 + (labLevel * 75))
+    const cost = Math.floor(320 + (labLevel * 80))
     if (resources >= cost) {
       setResources(resources - cost)
       setLabLevel(labLevel + 1)
@@ -107,7 +111,7 @@ function App() {
   }
 
   const upgradeTower = () => {
-    const cost = Math.floor(450 + (towerLevel * 110))
+    const cost = Math.floor(480 + (towerLevel * 120))
     if (resources >= cost) {
       setResources(resources - cost)
       setTowerLevel(towerLevel + 1)
@@ -118,13 +122,13 @@ function App() {
   }
 
   const prestigeReset = () => {
-    if (resources < 6000) {
-      alert("You need at least 6000 resources to prestige!")
+    if (resources < 7000) {
+      alert("You need at least 7000 resources to prestige!")
       return
     }
-    if (window.confirm("Prestige will reset buildings but give you stronger permanent bonuses. Continue?")) {
+    if (window.confirm("Prestige will reset buildings but give stronger permanent bonuses. Continue?")) {
       setPrestige(prev => prev + 1)
-      setResources(250)
+      setResources(300)
       setMineLevel(1)
       setFarmLevel(0)
       setLabLevel(0)
@@ -157,7 +161,7 @@ function App() {
           )}
         </div>
 
-        <p className="text-center text-emerald-400 text-xl mb-10">Progress is now saved automatically</p>
+        <p className="text-center text-emerald-400 text-xl mb-10">Progress Saved Automatically</p>
 
         <div className="bg-gray-800/70 border border-emerald-700 rounded-3xl p-6 mb-8 text-center">
           <p className="text-xl">Empire: <span className="text-emerald-400 font-bold">{username || "Not Created"}</span></p>
@@ -168,6 +172,7 @@ function App() {
           <div className="text-8xl mb-4">💎</div>
           <div className="text-7xl font-bold text-emerald-400">{Math.floor(resources)}</div>
           <div className="text-2xl text-gray-400">Resources</div>
+          <div className="text-emerald-400 mt-3">+{resourcesPerSecond} per second</div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
@@ -215,7 +220,7 @@ function App() {
         </div>
 
         <div className="text-center text-xs text-gray-500 mt-16">
-          Progress is saved in browser • Keep playing!
+          Real-time Resources Per Second added • Keep building your empire!
         </div>
       </div>
     </div>
