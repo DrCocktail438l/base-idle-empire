@@ -7,21 +7,23 @@ function App() {
   const [farmLevel, setFarmLevel] = useState(0)
   const [labLevel, setLabLevel] = useState(0)
   const [towerLevel, setTowerLevel] = useState(0)
+  const [vaultLevel, setVaultLevel] = useState(0)
   const [totalClaimed, setTotalClaimed] = useState(0)
   const [prestige, setPrestige] = useState(0)
   const [isConnected, setIsConnected] = useState(false)
   const [walletAddress, setWalletAddress] = useState('')
   const [resourcesPerSecond, setResourcesPerSecond] = useState(0)
 
-  // Auto production every 3 seconds + calculate RPS
+  // Auto production
   useEffect(() => {
     const productionPerTick = Math.floor(
       (mineLevel * 8) + 
       (farmLevel * 7) + 
       (labLevel * 10) + 
-      (towerLevel * 16)
-    ) * (1 + prestige * 0.7)
-
+      (towerLevel * 16) +
+      (vaultLevel * 12)
+    ) * (1 + prestige * 0.8)
+    
     const rps = (productionPerTick / 3).toFixed(1)
     setResourcesPerSecond(rps)
 
@@ -32,9 +34,9 @@ function App() {
     }, 3000)
 
     return () => clearInterval(interval)
-  }, [mineLevel, farmLevel, labLevel, towerLevel, prestige])
+  }, [mineLevel, farmLevel, labLevel, towerLevel, vaultLevel, prestige])
 
-  // Save progress
+  // Load saved progress
   useEffect(() => {
     const saved = localStorage.getItem('baseIdleEmpire')
     if (saved) {
@@ -44,16 +46,18 @@ function App() {
       setFarmLevel(data.farmLevel || 0)
       setLabLevel(data.labLevel || 0)
       setTowerLevel(data.towerLevel || 0)
+      setVaultLevel(data.vaultLevel || 0)
       setPrestige(data.prestige || 0)
       setTotalClaimed(data.totalClaimed || 0)
     }
   }, [])
 
+  // Save progress
   useEffect(() => {
     localStorage.setItem('baseIdleEmpire', JSON.stringify({
-      resources, mineLevel, farmLevel, labLevel, towerLevel, prestige, totalClaimed
+      resources, mineLevel, farmLevel, labLevel, towerLevel, vaultLevel, prestige, totalClaimed
     }))
-  }, [resources, mineLevel, farmLevel, labLevel, towerLevel, prestige, totalClaimed])
+  }, [resources, mineLevel, farmLevel, labLevel, towerLevel, vaultLevel, prestige, totalClaimed])
 
   const connectWallet = () => {
     setIsConnected(true)
@@ -70,7 +74,7 @@ function App() {
   }
 
   const claimResources = () => {
-    const production = Math.floor((mineLevel * 35) + (farmLevel * 28) + (labLevel * 40) + (towerLevel * 60))
+    const production = Math.floor((mineLevel * 35) + (farmLevel * 28) + (labLevel * 40) + (towerLevel * 60) + (vaultLevel * 45))
     const newResources = resources + production
     setResources(newResources)
     setTotalClaimed(prev => prev + production)
@@ -121,18 +125,30 @@ function App() {
     }
   }
 
+  const upgradeVault = () => {
+    const cost = Math.floor(600 + (vaultLevel * 150))
+    if (resources >= cost) {
+      setResources(resources - cost)
+      setVaultLevel(vaultLevel + 1)
+      alert(`🏦 Vault upgraded to Level ${vaultLevel + 1}! (+ Storage & Bonus)`)
+    } else {
+      alert("Not enough resources!")
+    }
+  }
+
   const prestigeReset = () => {
-    if (resources < 7000) {
-      alert("You need at least 7000 resources to prestige!")
+    if (resources < 8000) {
+      alert("You need at least 8000 resources to prestige!")
       return
     }
-    if (window.confirm("Prestige will reset buildings but give stronger permanent bonuses. Continue?")) {
+    if (window.confirm("Prestige will reset all buildings. Continue?")) {
       setPrestige(prev => prev + 1)
-      setResources(300)
+      setResources(350)
       setMineLevel(1)
       setFarmLevel(0)
       setLabLevel(0)
       setTowerLevel(0)
+      setVaultLevel(0)
       alert(`🌟 Prestige ${prestige + 1} achieved!`)
     }
   }
@@ -175,7 +191,7 @@ function App() {
           <div className="text-emerald-400 mt-3">+{resourcesPerSecond} per second</div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
           <div className="bg-gray-800 rounded-3xl p-8 text-center border border-orange-900">
             <div className="text-6xl mb-4">⛏️</div>
             <h3 className="text-2xl font-bold">Mine</h3>
@@ -203,6 +219,13 @@ function App() {
             <p className="text-5xl font-bold my-4">Lv.{towerLevel}</p>
             <button onClick={upgradeTower} className="bg-purple-600 hover:bg-purple-500 w-full py-4 rounded-2xl font-bold">Upgrade</button>
           </div>
+
+          <div className="bg-gray-800 rounded-3xl p-8 text-center border border-amber-900">
+            <div className="text-6xl mb-4">🏦</div>
+            <h3 className="text-2xl font-bold">Vault</h3>
+            <p className="text-5xl font-bold my-4">Lv.{vaultLevel}</p>
+            <button onClick={upgradeVault} className="bg-amber-600 hover:bg-amber-500 w-full py-4 rounded-2xl font-bold">Upgrade</button>
+          </div>
         </div>
 
         <div className="flex flex-col items-center gap-6">
@@ -220,7 +243,7 @@ function App() {
         </div>
 
         <div className="text-center text-xs text-gray-500 mt-16">
-          Real-time Resources Per Second added • Keep building your empire!
+          New Vault building added • Keep expanding your empire!
         </div>
       </div>
     </div>
