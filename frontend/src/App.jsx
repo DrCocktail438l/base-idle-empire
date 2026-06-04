@@ -17,11 +17,11 @@ function App() {
   // Auto production
   useEffect(() => {
     const productionPerTick = Math.floor(
-      (mineLevel * 8) + 
-      (farmLevel * 7) + 
-      (labLevel * 10) + 
-      (towerLevel * 16) +
-      (vaultLevel * 12)
+      (mineLevel * 9) + 
+      (farmLevel * 8) + 
+      (labLevel * 11) + 
+      (towerLevel * 18) +
+      (vaultLevel * 14)
     ) * (1 + prestige * 0.8)
     
     const rps = (productionPerTick / 3).toFixed(1)
@@ -62,7 +62,7 @@ function App() {
   const connectWallet = () => {
     setIsConnected(true)
     setWalletAddress("0x" + Math.random().toString(16).slice(2, 10).toUpperCase() + "...")
-    alert("✅ Wallet connected successfully! (Demo Mode)")
+    alert("✅ Wallet connected successfully! (Demo Mode on Base)")
   }
 
   const createEmpire = () => {
@@ -74,7 +74,7 @@ function App() {
   }
 
   const claimResources = () => {
-    const production = Math.floor((mineLevel * 35) + (farmLevel * 28) + (labLevel * 40) + (towerLevel * 60) + (vaultLevel * 45))
+    const production = Math.floor((mineLevel * 38) + (farmLevel * 30) + (labLevel * 42) + (towerLevel * 65) + (vaultLevel * 48))
     const newResources = resources + production
     setResources(newResources)
     setTotalClaimed(prev => prev + production)
@@ -82,7 +82,7 @@ function App() {
   }
 
   const upgradeMine = () => {
-    const cost = Math.floor(130 + (mineLevel * 65))
+    const cost = Math.floor(140 + (mineLevel * 70))
     if (resources >= cost) {
       setResources(resources - cost)
       setMineLevel(mineLevel + 1)
@@ -93,7 +93,7 @@ function App() {
   }
 
   const upgradeFarm = () => {
-    const cost = Math.floor(180 + (farmLevel * 70))
+    const cost = Math.floor(190 + (farmLevel * 75))
     if (resources >= cost) {
       setResources(resources - cost)
       setFarmLevel(farmLevel + 1)
@@ -104,7 +104,7 @@ function App() {
   }
 
   const upgradeLab = () => {
-    const cost = Math.floor(320 + (labLevel * 80))
+    const cost = Math.floor(340 + (labLevel * 85))
     if (resources >= cost) {
       setResources(resources - cost)
       setLabLevel(labLevel + 1)
@@ -115,7 +115,7 @@ function App() {
   }
 
   const upgradeTower = () => {
-    const cost = Math.floor(480 + (towerLevel * 120))
+    const cost = Math.floor(500 + (towerLevel * 130))
     if (resources >= cost) {
       setResources(resources - cost)
       setTowerLevel(towerLevel + 1)
@@ -126,30 +126,30 @@ function App() {
   }
 
   const upgradeVault = () => {
-    const cost = Math.floor(600 + (vaultLevel * 150))
+    const cost = Math.floor(650 + (vaultLevel * 160))
     if (resources >= cost) {
       setResources(resources - cost)
       setVaultLevel(vaultLevel + 1)
-      alert(`🏦 Vault upgraded to Level ${vaultLevel + 1}! (+ Storage & Bonus)`)
+      alert(`🏦 Vault upgraded to Level ${vaultLevel + 1}!`)
     } else {
       alert("Not enough resources!")
     }
   }
 
   const prestigeReset = () => {
-    if (resources < 8000) {
-      alert("You need at least 8000 resources to prestige!")
+    if (resources < 10000) {
+      alert("You need at least 10,000 resources to prestige!")
       return
     }
-    if (window.confirm("Prestige will reset all buildings. Continue?")) {
+    if (window.confirm("Prestige will reset all buildings but give you stronger permanent bonuses. Continue?")) {
       setPrestige(prev => prev + 1)
-      setResources(350)
+      setResources(400)
       setMineLevel(1)
       setFarmLevel(0)
       setLabLevel(0)
       setTowerLevel(0)
       setVaultLevel(0)
-      alert(`🌟 Prestige ${prestige + 1} achieved!`)
+      alert(`🌟 Prestige ${prestige + 1} achieved! Your empire is legendary!`)
     }
   }
 
@@ -177,7 +177,7 @@ function App() {
           )}
         </div>
 
-        <p className="text-center text-emerald-400 text-xl mb-10">Progress Saved Automatically</p>
+        <p className="text-center text-emerald-400 text-xl mb-10">On-chain Idle Empire on Base</p>
 
         <div className="bg-gray-800/70 border border-emerald-700 rounded-3xl p-6 mb-8 text-center">
           <p className="text-xl">Empire: <span className="text-emerald-400 font-bold">{username || "Not Created"}</span></p>
@@ -243,7 +243,7 @@ function App() {
         </div>
 
         <div className="text-center text-xs text-gray-500 mt-16">
-          New Vault building added • Keep expanding your empire!
+          5 Buildings • Auto Save • Prestige System • Ready for Base deployment
         </div>
       </div>
     </div>
