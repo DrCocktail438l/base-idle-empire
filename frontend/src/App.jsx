@@ -13,8 +13,9 @@ function App() {
   const [isConnected, setIsConnected] = useState(false)
   const [walletAddress, setWalletAddress] = useState('')
   const [resourcesPerSecond, setResourcesPerSecond] = useState(0)
+  const [empireAge, setEmpireAge] = useState(0) // in minutes
 
-  // Auto production
+  // Auto production + Empire Age timer
   useEffect(() => {
     const productionPerTick = Math.floor(
       (mineLevel * 9) + 
@@ -31,6 +32,7 @@ function App() {
       if (productionPerTick > 0) {
         setResources(prev => prev + productionPerTick)
       }
+      setEmpireAge(prev => prev + 0.05) // ~3 seconds = 0.05 minute
     }, 3000)
 
     return () => clearInterval(interval)
@@ -49,20 +51,22 @@ function App() {
       setVaultLevel(data.vaultLevel || 0)
       setPrestige(data.prestige || 0)
       setTotalClaimed(data.totalClaimed || 0)
+      setEmpireAge(data.empireAge || 0)
     }
   }, [])
 
   // Save progress
   useEffect(() => {
     localStorage.setItem('baseIdleEmpire', JSON.stringify({
-      resources, mineLevel, farmLevel, labLevel, towerLevel, vaultLevel, prestige, totalClaimed
+      resources, mineLevel, farmLevel, labLevel, towerLevel, vaultLevel, 
+      prestige, totalClaimed, empireAge
     }))
-  }, [resources, mineLevel, farmLevel, labLevel, towerLevel, vaultLevel, prestige, totalClaimed])
+  }, [resources, mineLevel, farmLevel, labLevel, towerLevel, vaultLevel, prestige, totalClaimed, empireAge])
 
   const connectWallet = () => {
     setIsConnected(true)
     setWalletAddress("0x" + Math.random().toString(16).slice(2, 10).toUpperCase() + "...")
-    alert("✅ Wallet connected successfully! (Demo Mode on Base)")
+    alert("✅ Wallet connected successfully! (Demo Mode)")
   }
 
   const createEmpire = () => {
@@ -141,7 +145,7 @@ function App() {
       alert("You need at least 10,000 resources to prestige!")
       return
     }
-    if (window.confirm("Prestige will reset all buildings but give you stronger permanent bonuses. Continue?")) {
+    if (window.confirm("Prestige will reset all buildings. Continue?")) {
       setPrestige(prev => prev + 1)
       setResources(400)
       setMineLevel(1)
@@ -149,7 +153,7 @@ function App() {
       setLabLevel(0)
       setTowerLevel(0)
       setVaultLevel(0)
-      alert(`🌟 Prestige ${prestige + 1} achieved! Your empire is legendary!`)
+      alert(`🌟 Prestige ${prestige + 1} achieved!`)
     }
   }
 
@@ -181,7 +185,9 @@ function App() {
 
         <div className="bg-gray-800/70 border border-emerald-700 rounded-3xl p-6 mb-8 text-center">
           <p className="text-xl">Empire: <span className="text-emerald-400 font-bold">{username || "Not Created"}</span></p>
-          <p className="text-sm text-gray-400">Prestige: {prestige} • Total Earned: {totalClaimed}</p>
+          <p className="text-sm text-gray-400">
+            Prestige: {prestige} • Total Earned: {totalClaimed} • Age: {Math.floor(empireAge)} minutes
+          </p>
         </div>
 
         <div className="bg-gray-800 rounded-3xl p-14 text-center mb-12 border-2 border-emerald-600">
@@ -243,7 +249,7 @@ function App() {
         </div>
 
         <div className="text-center text-xs text-gray-500 mt-16">
-          5 Buildings • Auto Save • Prestige System • Ready for Base deployment
+          Empire Age + Auto Save + 5 Buildings • Great progress!
         </div>
       </div>
     </div>
