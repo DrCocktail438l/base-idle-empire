@@ -13,9 +13,9 @@ function App() {
   const [isConnected, setIsConnected] = useState(false)
   const [walletAddress, setWalletAddress] = useState('')
   const [resourcesPerSecond, setResourcesPerSecond] = useState(0)
-  const [empireAge, setEmpireAge] = useState(0) // in minutes
+  const [empireAge, setEmpireAge] = useState(0)
 
-  // Auto production + Empire Age timer
+  // Auto production + Empire Age
   useEffect(() => {
     const productionPerTick = Math.floor(
       (mineLevel * 9) + 
@@ -23,7 +23,7 @@ function App() {
       (labLevel * 11) + 
       (towerLevel * 18) +
       (vaultLevel * 14)
-    ) * (1 + prestige * 0.8)
+    ) * (1 + prestige * 0.9)
     
     const rps = (productionPerTick / 3).toFixed(1)
     setResourcesPerSecond(rps)
@@ -32,13 +32,13 @@ function App() {
       if (productionPerTick > 0) {
         setResources(prev => prev + productionPerTick)
       }
-      setEmpireAge(prev => prev + 0.05) // ~3 seconds = 0.05 minute
+      setEmpireAge(prev => prev + 0.05)
     }, 3000)
 
     return () => clearInterval(interval)
   }, [mineLevel, farmLevel, labLevel, towerLevel, vaultLevel, prestige])
 
-  // Load saved progress
+  // Load progress
   useEffect(() => {
     const saved = localStorage.getItem('baseIdleEmpire')
     if (saved) {
@@ -78,7 +78,7 @@ function App() {
   }
 
   const claimResources = () => {
-    const production = Math.floor((mineLevel * 38) + (farmLevel * 30) + (labLevel * 42) + (towerLevel * 65) + (vaultLevel * 48))
+    const production = Math.floor((mineLevel * 40) + (farmLevel * 32) + (labLevel * 45) + (towerLevel * 70) + (vaultLevel * 52))
     const newResources = resources + production
     setResources(newResources)
     setTotalClaimed(prev => prev + production)
@@ -86,7 +86,7 @@ function App() {
   }
 
   const upgradeMine = () => {
-    const cost = Math.floor(140 + (mineLevel * 70))
+    const cost = Math.floor(150 + (mineLevel * 75))
     if (resources >= cost) {
       setResources(resources - cost)
       setMineLevel(mineLevel + 1)
@@ -97,7 +97,7 @@ function App() {
   }
 
   const upgradeFarm = () => {
-    const cost = Math.floor(190 + (farmLevel * 75))
+    const cost = Math.floor(200 + (farmLevel * 80))
     if (resources >= cost) {
       setResources(resources - cost)
       setFarmLevel(farmLevel + 1)
@@ -108,7 +108,7 @@ function App() {
   }
 
   const upgradeLab = () => {
-    const cost = Math.floor(340 + (labLevel * 85))
+    const cost = Math.floor(360 + (labLevel * 90))
     if (resources >= cost) {
       setResources(resources - cost)
       setLabLevel(labLevel + 1)
@@ -119,7 +119,7 @@ function App() {
   }
 
   const upgradeTower = () => {
-    const cost = Math.floor(500 + (towerLevel * 130))
+    const cost = Math.floor(520 + (towerLevel * 140))
     if (resources >= cost) {
       setResources(resources - cost)
       setTowerLevel(towerLevel + 1)
@@ -130,7 +130,7 @@ function App() {
   }
 
   const upgradeVault = () => {
-    const cost = Math.floor(650 + (vaultLevel * 160))
+    const cost = Math.floor(700 + (vaultLevel * 170))
     if (resources >= cost) {
       setResources(resources - cost)
       setVaultLevel(vaultLevel + 1)
@@ -141,19 +141,19 @@ function App() {
   }
 
   const prestigeReset = () => {
-    if (resources < 10000) {
-      alert("You need at least 10,000 resources to prestige!")
+    if (resources < 12000) {
+      alert("You need at least 12,000 resources to prestige!")
       return
     }
-    if (window.confirm("Prestige will reset all buildings. Continue?")) {
+    if (window.confirm("Prestige will reset all buildings but give stronger permanent bonuses. Continue?")) {
       setPrestige(prev => prev + 1)
-      setResources(400)
+      setResources(500)
       setMineLevel(1)
       setFarmLevel(0)
       setLabLevel(0)
       setTowerLevel(0)
       setVaultLevel(0)
-      alert(`🌟 Prestige ${prestige + 1} achieved!`)
+      alert(`🌟 Prestige ${prestige + 1} achieved! You are becoming a legend!`)
     }
   }
 
@@ -249,7 +249,7 @@ function App() {
         </div>
 
         <div className="text-center text-xs text-gray-500 mt-16">
-          Empire Age + Auto Save + 5 Buildings • Great progress!
+          Commit 28/100 • Game is getting really solid!
         </div>
       </div>
     </div>
