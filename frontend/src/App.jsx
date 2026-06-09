@@ -18,12 +18,12 @@ function App() {
   // Auto production + Empire Age
   useEffect(() => {
     const productionPerTick = Math.floor(
-      (mineLevel * 9) + 
-      (farmLevel * 8) + 
-      (labLevel * 11) + 
-      (towerLevel * 18) +
-      (vaultLevel * 14)
-    ) * (1 + prestige * 0.9)
+      (mineLevel * 10) + 
+      (farmLevel * 9) + 
+      (labLevel * 12) + 
+      (towerLevel * 20) +
+      (vaultLevel * 15)
+    ) * (1 + prestige * 1.0)
     
     const rps = (productionPerTick / 3).toFixed(1)
     setResourcesPerSecond(rps)
@@ -38,7 +38,7 @@ function App() {
     return () => clearInterval(interval)
   }, [mineLevel, farmLevel, labLevel, towerLevel, vaultLevel, prestige])
 
-  // Load progress
+  // Load saved progress
   useEffect(() => {
     const saved = localStorage.getItem('baseIdleEmpire')
     if (saved) {
@@ -78,7 +78,7 @@ function App() {
   }
 
   const claimResources = () => {
-    const production = Math.floor((mineLevel * 40) + (farmLevel * 32) + (labLevel * 45) + (towerLevel * 70) + (vaultLevel * 52))
+    const production = Math.floor((mineLevel * 42) + (farmLevel * 35) + (labLevel * 48) + (towerLevel * 75) + (vaultLevel * 55))
     const newResources = resources + production
     setResources(newResources)
     setTotalClaimed(prev => prev + production)
@@ -86,7 +86,7 @@ function App() {
   }
 
   const upgradeMine = () => {
-    const cost = Math.floor(150 + (mineLevel * 75))
+    const cost = Math.floor(160 + (mineLevel * 80))
     if (resources >= cost) {
       setResources(resources - cost)
       setMineLevel(mineLevel + 1)
@@ -97,7 +97,7 @@ function App() {
   }
 
   const upgradeFarm = () => {
-    const cost = Math.floor(200 + (farmLevel * 80))
+    const cost = Math.floor(210 + (farmLevel * 85))
     if (resources >= cost) {
       setResources(resources - cost)
       setFarmLevel(farmLevel + 1)
@@ -108,7 +108,7 @@ function App() {
   }
 
   const upgradeLab = () => {
-    const cost = Math.floor(360 + (labLevel * 90))
+    const cost = Math.floor(380 + (labLevel * 95))
     if (resources >= cost) {
       setResources(resources - cost)
       setLabLevel(labLevel + 1)
@@ -119,7 +119,7 @@ function App() {
   }
 
   const upgradeTower = () => {
-    const cost = Math.floor(520 + (towerLevel * 140))
+    const cost = Math.floor(550 + (towerLevel * 150))
     if (resources >= cost) {
       setResources(resources - cost)
       setTowerLevel(towerLevel + 1)
@@ -130,7 +130,7 @@ function App() {
   }
 
   const upgradeVault = () => {
-    const cost = Math.floor(700 + (vaultLevel * 170))
+    const cost = Math.floor(750 + (vaultLevel * 180))
     if (resources >= cost) {
       setResources(resources - cost)
       setVaultLevel(vaultLevel + 1)
@@ -141,19 +141,19 @@ function App() {
   }
 
   const prestigeReset = () => {
-    if (resources < 12000) {
-      alert("You need at least 12,000 resources to prestige!")
+    if (resources < 15000) {
+      alert("You need at least 15,000 resources to prestige!")
       return
     }
-    if (window.confirm("Prestige will reset all buildings but give stronger permanent bonuses. Continue?")) {
+    if (window.confirm("Prestige will reset all buildings but give you stronger permanent bonuses. Continue?")) {
       setPrestige(prev => prev + 1)
-      setResources(500)
+      setResources(600)
       setMineLevel(1)
       setFarmLevel(0)
       setLabLevel(0)
       setTowerLevel(0)
       setVaultLevel(0)
-      alert(`🌟 Prestige ${prestige + 1} achieved! You are becoming a legend!`)
+      alert(`🌟 Prestige ${prestige + 1} achieved! You are a true Base Legend!`)
     }
   }
 
@@ -249,7 +249,7 @@ function App() {
         </div>
 
         <div className="text-center text-xs text-gray-500 mt-16">
-          Commit 28/100 • Game is getting really solid!
+          Commit 30/100 • Halfway to the goal! Great job!
         </div>
       </div>
     </div>
