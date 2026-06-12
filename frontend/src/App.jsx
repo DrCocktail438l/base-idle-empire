@@ -78,7 +78,7 @@ function App() {
   }
 
   const claimResources = () => {
-    const production = Math.floor((mineLevel * 48) + (farmLevel * 40) + (labLevel * 52) + (towerLevel * 85) + (vaultLevel * 65))
+    const production = Math.floor((mineLevel * 50) + (farmLevel * 42) + (labLevel * 55) + (towerLevel * 90) + (vaultLevel * 70))
     const newResources = resources + production
     setResources(newResources)
     setTotalClaimed(prev => prev + production)
@@ -86,7 +86,7 @@ function App() {
   }
 
   const upgradeMine = () => {
-    const cost = Math.floor(180 + (mineLevel * 90))
+    const cost = Math.floor(190 + (mineLevel * 95))
     if (resources >= cost) {
       setResources(resources - cost)
       setMineLevel(mineLevel + 1)
@@ -97,7 +97,7 @@ function App() {
   }
 
   const upgradeFarm = () => {
-    const cost = Math.floor(230 + (farmLevel * 95))
+    const cost = Math.floor(240 + (farmLevel * 100))
     if (resources >= cost) {
       setResources(resources - cost)
       setFarmLevel(farmLevel + 1)
@@ -108,7 +108,7 @@ function App() {
   }
 
   const upgradeLab = () => {
-    const cost = Math.floor(420 + (labLevel * 105))
+    const cost = Math.floor(440 + (labLevel * 110))
     if (resources >= cost) {
       setResources(resources - cost)
       setLabLevel(labLevel + 1)
@@ -119,7 +119,7 @@ function App() {
   }
 
   const upgradeTower = () => {
-    const cost = Math.floor(620 + (towerLevel * 170))
+    const cost = Math.floor(650 + (towerLevel * 180))
     if (resources >= cost) {
       setResources(resources - cost)
       setTowerLevel(towerLevel + 1)
@@ -130,7 +130,7 @@ function App() {
   }
 
   const upgradeVault = () => {
-    const cost = Math.floor(850 + (vaultLevel * 200))
+    const cost = Math.floor(900 + (vaultLevel * 210))
     if (resources >= cost) {
       setResources(resources - cost)
       setVaultLevel(vaultLevel + 1)
@@ -141,19 +141,19 @@ function App() {
   }
 
   const prestigeReset = () => {
-    if (resources < 20000) {
-      alert("You need at least 20,000 resources to prestige!")
+    if (resources < 25000) {
+      alert("You need at least 25,000 resources to prestige!")
       return
     }
     if (window.confirm("Prestige will reset all buildings but give you stronger permanent bonuses. Continue?")) {
       setPrestige(prev => prev + 1)
-      setResources(800)
+      setResources(900)
       setMineLevel(1)
       setFarmLevel(0)
       setLabLevel(0)
       setTowerLevel(0)
       setVaultLevel(0)
-      alert(`🌟 Prestige ${prestige + 1} achieved! You are a Base Legend!`)
+      alert(`🌟 Prestige ${prestige + 1} achieved! Amazing work!`)
     }
   }
 
@@ -249,7 +249,7 @@ function App() {
         </div>
 
         <div className="text-center text-xs text-gray-500 mt-16">
-          Commit 32/100 • Game balance improved • Keep going!
+          Commit 32/100 • Game is getting stronger with every commit!
         </div>
       </div>
     </div>
