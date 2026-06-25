@@ -78,7 +78,7 @@ function App() {
   }
 
   const claimResources = () => {
-    const production = Math.floor((mineLevel * 80) + (farmLevel * 70) + (labLevel * 85) + (towerLevel * 140) + (vaultLevel * 100))
+    const production = Math.floor((mineLevel * 82) + (farmLevel * 72) + (labLevel * 88) + (towerLevel * 145) + (vaultLevel * 105))
     const newResources = resources + production
     setResources(newResources)
     setTotalClaimed(prev => prev + production)
@@ -108,7 +108,7 @@ function App() {
   }
 
   const upgradeLab = () => {
-    const cost = Math.floor(700 + (labLevel * 180))
+    const cost = Math.floor(680 + (labLevel * 180))
     if (resources >= cost) {
       setResources(resources - cost)
       setLabLevel(labLevel + 1)
@@ -147,13 +147,13 @@ function App() {
     }
     if (window.confirm("Prestige will reset all buildings but give you stronger permanent bonuses. Continue?")) {
       setPrestige(prev => prev + 1)
-      setResources(4000)
+      setResources(4500)
       setMineLevel(1)
       setFarmLevel(0)
       setLabLevel(0)
       setTowerLevel(0)
       setVaultLevel(0)
-      alert(`🌟 Prestige ${prestige + 1} achieved! You are a true Base Empire Legend!`)
+      alert(`🌟 Prestige ${prestige + 1} achieved! Massive milestone!`)
     }
   }
 
@@ -249,7 +249,7 @@ function App() {
         </div>
 
         <div className="text-center text-xs text-gray-500 mt-16">
-          Commit 39/100 • 40 commits milestone reached soon!
+          🎉 Commit 40/100 • Big milestone reached! Great job!
         </div>
       </div>
     </div>
