@@ -108,7 +108,7 @@ function App() {
   }
 
   const upgradeLab = () => {
-    const cost = Math.floor(720 + (labLevel * 185))
+    const cost = Math.floor(750 + (labLevel * 190))
     if (resources >= cost) {
       setResources(resources - cost)
       setLabLevel(labLevel + 1)
@@ -119,7 +119,7 @@ function App() {
   }
 
   const upgradeTower = () => {
-    const cost = Math.floor(1100 + (towerLevel * 290))
+    const cost = Math.floor(1150 + (towerLevel * 300))
     if (resources >= cost) {
       setResources(resources - cost)
       setTowerLevel(towerLevel + 1)
@@ -130,7 +130,7 @@ function App() {
   }
 
   const upgradeVault = () => {
-    const cost = Math.floor(1600 + (vaultLevel * 400))
+    const cost = Math.floor(1650 + (vaultLevel * 400))
     if (resources >= cost) {
       setResources(resources - cost)
       setVaultLevel(vaultLevel + 1)
@@ -141,8 +141,8 @@ function App() {
   }
 
   const prestigeReset = () => {
-    if (resources < 100000) {
-      alert("You need at least 100,000 resources to prestige!")
+    if (resources < 120000) {
+      alert("You need at least 120,000 resources to prestige!")
       return
     }
     if (window.confirm("Prestige will reset all buildings but give you stronger permanent bonuses. Continue?")) {
@@ -153,7 +153,7 @@ function App() {
       setLabLevel(0)
       setTowerLevel(0)
       setVaultLevel(0)
-      alert(`🌟 Prestige ${prestige + 1} achieved! Amazing work!`)
+      alert(`🌟 Prestige ${prestige + 1} achieved! Legendary progress!`)
     }
   }
 
@@ -249,7 +249,7 @@ function App() {
         </div>
 
         <div className="text-center text-xs text-gray-500 mt-16">
-          Commit 40/100 • Milestone reached! Continuing strong!
+          Commit 41/100 • Continuing strong!
         </div>
       </div>
     </div>
