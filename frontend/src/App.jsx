@@ -78,7 +78,7 @@ function App() {
   }
 
   const claimResources = () => {
-    const production = Math.floor((mineLevel * 82) + (farmLevel * 72) + (labLevel * 88) + (towerLevel * 148) + (vaultLevel * 105))
+    const production = Math.floor((mineLevel * 85) + (farmLevel * 75) + (labLevel * 90) + (towerLevel * 155) + (vaultLevel * 110))
     const newResources = resources + production
     setResources(newResources)
     setTotalClaimed(prev => prev + production)
@@ -86,7 +86,7 @@ function App() {
   }
 
   const upgradeMine = () => {
-    const cost = Math.floor(300 + (mineLevel * 155))
+    const cost = Math.floor(310 + (mineLevel * 160))
     if (resources >= cost) {
       setResources(resources - cost)
       setMineLevel(mineLevel + 1)
@@ -97,7 +97,7 @@ function App() {
   }
 
   const upgradeFarm = () => {
-    const cost = Math.floor(370 + (farmLevel * 165))
+    const cost = Math.floor(390 + (farmLevel * 170))
     if (resources >= cost) {
       setResources(resources - cost)
       setFarmLevel(farmLevel + 1)
@@ -108,7 +108,7 @@ function App() {
   }
 
   const upgradeLab = () => {
-    const cost = Math.floor(750 + (labLevel * 190))
+    const cost = Math.floor(780 + (labLevel * 190))
     if (resources >= cost) {
       setResources(resources - cost)
       setLabLevel(labLevel + 1)
@@ -119,7 +119,7 @@ function App() {
   }
 
   const upgradeTower = () => {
-    const cost = Math.floor(1150 + (towerLevel * 300))
+    const cost = Math.floor(1150 + (towerLevel * 310))
     if (resources >= cost) {
       setResources(resources - cost)
       setTowerLevel(towerLevel + 1)
@@ -130,7 +130,7 @@ function App() {
   }
 
   const upgradeVault = () => {
-    const cost = Math.floor(1650 + (vaultLevel * 400))
+    const cost = Math.floor(1750 + (vaultLevel * 420))
     if (resources >= cost) {
       setResources(resources - cost)
       setVaultLevel(vaultLevel + 1)
@@ -147,13 +147,13 @@ function App() {
     }
     if (window.confirm("Prestige will reset all buildings but give you stronger permanent bonuses. Continue?")) {
       setPrestige(prev => prev + 1)
-      setResources(5000)
+      setResources(5500)
       setMineLevel(1)
       setFarmLevel(0)
       setLabLevel(0)
       setTowerLevel(0)
       setVaultLevel(0)
-      alert(`🌟 Prestige ${prestige + 1} achieved! Legendary progress!`)
+      alert(`🌟 Prestige ${prestige + 1} achieved! You are unstoppable!`)
     }
   }
 
@@ -249,7 +249,7 @@ function App() {
         </div>
 
         <div className="text-center text-xs text-gray-500 mt-16">
-          Commit 41/100 • Continuing strong!
+          Commit 41/100 • Halfway to 80! Keep pushing!
         </div>
       </div>
     </div>
