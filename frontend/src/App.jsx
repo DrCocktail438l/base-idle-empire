@@ -86,7 +86,7 @@ function App() {
   }
 
   const upgradeMine = () => {
-    const cost = Math.floor(330 + (mineLevel * 170))
+    const cost = Math.floor(340 + (mineLevel * 170))
     if (resources >= cost) {
       setResources(resources - cost)
       setMineLevel(mineLevel + 1)
@@ -108,7 +108,7 @@ function App() {
   }
 
   const upgradeLab = () => {
-    const cost = Math.floor(820 + (labLevel * 200))
+    const cost = Math.floor(850 + (labLevel * 210))
     if (resources >= cost) {
       setResources(resources - cost)
       setLabLevel(labLevel + 1)
@@ -119,7 +119,7 @@ function App() {
   }
 
   const upgradeTower = () => {
-    const cost = Math.floor(1250 + (towerLevel * 320))
+    const cost = Math.floor(1300 + (towerLevel * 340))
     if (resources >= cost) {
       setResources(resources - cost)
       setTowerLevel(towerLevel + 1)
@@ -130,7 +130,7 @@ function App() {
   }
 
   const upgradeVault = () => {
-    const cost = Math.floor(1850 + (vaultLevel * 480))
+    const cost = Math.floor(1900 + (vaultLevel * 480))
     if (resources >= cost) {
       setResources(resources - cost)
       setVaultLevel(vaultLevel + 1)
@@ -141,19 +141,19 @@ function App() {
   }
 
   const prestigeReset = () => {
-    if (resources < 150000) {
-      alert("You need at least 150,000 resources to prestige!")
+    if (resources < 180000) {
+      alert("You need at least 180,000 resources to prestige!")
       return
     }
     if (window.confirm("Prestige will reset all buildings but give you stronger permanent bonuses. Continue?")) {
       setPrestige(prev => prev + 1)
-      setResources(6500)
+      setResources(7000)
       setMineLevel(1)
       setFarmLevel(0)
       setLabLevel(0)
       setTowerLevel(0)
       setVaultLevel(0)
-      alert(`🌟 Prestige ${prestige + 1} achieved! Massive empire growth!`)
+      alert(`🌟 Prestige ${prestige + 1} achieved! Incredible empire!`)
     }
   }
 
@@ -249,7 +249,7 @@ function App() {
         </div>
 
         <div className="text-center text-xs text-gray-500 mt-16">
-          Commit 42/100 • Steady progress!
+          Commit 43/100 • The empire keeps growing!
         </div>
       </div>
     </div>
