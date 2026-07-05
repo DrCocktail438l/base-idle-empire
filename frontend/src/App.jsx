@@ -86,7 +86,7 @@ function App() {
   }
 
   const upgradeMine = () => {
-    const cost = Math.floor(350 + (mineLevel * 180))
+    const cost = Math.floor(360 + (mineLevel * 185))
     if (resources >= cost) {
       setResources(resources - cost)
       setMineLevel(mineLevel + 1)
@@ -97,7 +97,7 @@ function App() {
   }
 
   const upgradeFarm = () => {
-    const cost = Math.floor(440 + (farmLevel * 190))
+    const cost = Math.floor(460 + (farmLevel * 200))
     if (resources >= cost) {
       setResources(resources - cost)
       setFarmLevel(farmLevel + 1)
@@ -108,7 +108,7 @@ function App() {
   }
 
   const upgradeLab = () => {
-    const cost = Math.floor(920 + (labLevel * 230))
+    const cost = Math.floor(950 + (labLevel * 230))
     if (resources >= cost) {
       setResources(resources - cost)
       setLabLevel(labLevel + 1)
@@ -119,7 +119,7 @@ function App() {
   }
 
   const upgradeTower = () => {
-    const cost = Math.floor(1450 + (towerLevel * 370))
+    const cost = Math.floor(1450 + (towerLevel * 380))
     if (resources >= cost) {
       setResources(resources - cost)
       setTowerLevel(towerLevel + 1)
@@ -147,13 +147,13 @@ function App() {
     }
     if (window.confirm("Prestige will reset all buildings but give you stronger permanent bonuses. Continue?")) {
       setPrestige(prev => prev + 1)
-      setResources(8500)
+      setResources(9000)
       setMineLevel(1)
       setFarmLevel(0)
       setLabLevel(0)
       setTowerLevel(0)
       setVaultLevel(0)
-      alert(`🌟 Prestige ${prestige + 1} achieved! You are a Base legend!`)
+      alert(`🌟 Prestige ${prestige + 1} achieved! You are building a true legacy!`)
     }
   }
 
@@ -249,7 +249,7 @@ function App() {
         </div>
 
         <div className="text-center text-xs text-gray-500 mt-16">
-          Commit 44/100 • Steady progress toward 100!
+          Commit 45/100 • Halfway to 90! Keep going!
         </div>
       </div>
     </div>
