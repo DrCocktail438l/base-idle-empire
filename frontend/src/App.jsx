@@ -97,7 +97,7 @@ function App() {
   }
 
   const upgradeFarm = () => {
-    const cost = Math.floor(460 + (farmLevel * 200))
+    const cost = Math.floor(450 + (farmLevel * 200))
     if (resources >= cost) {
       setResources(resources - cost)
       setFarmLevel(farmLevel + 1)
@@ -108,7 +108,7 @@ function App() {
   }
 
   const upgradeLab = () => {
-    const cost = Math.floor(950 + (labLevel * 230))
+    const cost = Math.floor(950 + (labLevel * 240))
     if (resources >= cost) {
       setResources(resources - cost)
       setLabLevel(labLevel + 1)
@@ -119,7 +119,7 @@ function App() {
   }
 
   const upgradeTower = () => {
-    const cost = Math.floor(1450 + (towerLevel * 380))
+    const cost = Math.floor(1550 + (towerLevel * 400))
     if (resources >= cost) {
       setResources(resources - cost)
       setTowerLevel(towerLevel + 1)
@@ -130,7 +130,7 @@ function App() {
   }
 
   const upgradeVault = () => {
-    const cost = Math.floor(2100 + (vaultLevel * 550))
+    const cost = Math.floor(2250 + (vaultLevel * 600))
     if (resources >= cost) {
       setResources(resources - cost)
       setVaultLevel(vaultLevel + 1)
@@ -141,19 +141,19 @@ function App() {
   }
 
   const prestigeReset = () => {
-    if (resources < 250000) {
-      alert("You need at least 250,000 resources to prestige!")
+    if (resources < 300000) {
+      alert("You need at least 300,000 resources to prestige!")
       return
     }
     if (window.confirm("Prestige will reset all buildings but give you stronger permanent bonuses. Continue?")) {
       setPrestige(prev => prev + 1)
-      setResources(9000)
+      setResources(10000)
       setMineLevel(1)
       setFarmLevel(0)
       setLabLevel(0)
       setTowerLevel(0)
       setVaultLevel(0)
-      alert(`🌟 Prestige ${prestige + 1} achieved! You are building a true legacy!`)
+      alert(`🌟 Prestige ${prestige + 1} achieved! You are a true Base Master!`)
     }
   }
 
@@ -249,7 +249,7 @@ function App() {
         </div>
 
         <div className="text-center text-xs text-gray-500 mt-16">
-          Commit 45/100 • Halfway to 90! Keep going!
+          Commit 45/100 • Halfway to 90!
         </div>
       </div>
     </div>
