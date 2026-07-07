@@ -86,7 +86,7 @@ function App() {
   }
 
   const upgradeMine = () => {
-    const cost = Math.floor(380 + (mineLevel * 190))
+    const cost = Math.floor(380 + (mineLevel * 200))
     if (resources >= cost) {
       setResources(resources - cost)
       setMineLevel(mineLevel + 1)
@@ -97,7 +97,7 @@ function App() {
   }
 
   const upgradeFarm = () => {
-    const cost = Math.floor(480 + (farmLevel * 210))
+    const cost = Math.floor(500 + (farmLevel * 220))
     if (resources >= cost) {
       setResources(resources - cost)
       setFarmLevel(farmLevel + 1)
@@ -108,7 +108,7 @@ function App() {
   }
 
   const upgradeLab = () => {
-    const cost = Math.floor(980 + (labLevel * 250))
+    const cost = Math.floor(1050 + (labLevel * 260))
     if (resources >= cost) {
       setResources(resources - cost)
       setLabLevel(labLevel + 1)
@@ -119,7 +119,7 @@ function App() {
   }
 
   const upgradeTower = () => {
-    const cost = Math.floor(1650 + (towerLevel * 400))
+    const cost = Math.floor(1750 + (towerLevel * 450))
     if (resources >= cost) {
       setResources(resources - cost)
       setTowerLevel(towerLevel + 1)
@@ -130,7 +130,7 @@ function App() {
   }
 
   const upgradeVault = () => {
-    const cost = Math.floor(2350 + (vaultLevel * 600))
+    const cost = Math.floor(2450 + (vaultLevel * 650))
     if (resources >= cost) {
       setResources(resources - cost)
       setVaultLevel(vaultLevel + 1)
@@ -153,7 +153,7 @@ function App() {
       setLabLevel(0)
       setTowerLevel(0)
       setVaultLevel(0)
-      alert(`🌟 Prestige ${prestige + 1} achieved! Legendary empire!`)
+      alert(`🌟 Prestige ${prestige + 1} achieved! You are a true Base legend!`)
     }
   }
 
@@ -249,7 +249,7 @@ function App() {
         </div>
 
         <div className="text-center text-xs text-gray-500 mt-16">
-          Commit 46/100 • Keep building the empire!
+          Commit 47/100 • The empire keeps expanding!
         </div>
       </div>
     </div>
