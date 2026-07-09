@@ -86,7 +86,7 @@ function App() {
   }
 
   const upgradeMine = () => {
-    const cost = Math.floor(390 + (mineLevel * 200))
+    const cost = Math.floor(380 + (mineLevel * 200))
     if (resources >= cost) {
       setResources(resources - cost)
       setMineLevel(mineLevel + 1)
@@ -153,7 +153,7 @@ function App() {
       setLabLevel(0)
       setTowerLevel(0)
       setVaultLevel(0)
-      alert(`🌟 Prestige ${prestige + 1} achieved! You are a Base powerhouse!`)
+      alert(`🌟 Prestige ${prestige + 1} achieved! You are building a massive empire!`)
     }
   }
 
@@ -249,7 +249,7 @@ function App() {
         </div>
 
         <div className="text-center text-xs text-gray-500 mt-16">
-          Commit 47/100 • The empire keeps expanding!
+          Commit 48/100 • Halfway to 100! Keep going!
         </div>
       </div>
     </div>
