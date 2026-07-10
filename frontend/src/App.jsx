@@ -86,7 +86,7 @@ function App() {
   }
 
   const upgradeMine = () => {
-    const cost = Math.floor(380 + (mineLevel * 200))
+    const cost = Math.floor(400 + (mineLevel * 210))
     if (resources >= cost) {
       setResources(resources - cost)
       setMineLevel(mineLevel + 1)
@@ -97,7 +97,7 @@ function App() {
   }
 
   const upgradeFarm = () => {
-    const cost = Math.floor(500 + (farmLevel * 220))
+    const cost = Math.floor(530 + (farmLevel * 230))
     if (resources >= cost) {
       setResources(resources - cost)
       setFarmLevel(farmLevel + 1)
@@ -108,7 +108,7 @@ function App() {
   }
 
   const upgradeLab = () => {
-    const cost = Math.floor(1050 + (labLevel * 260))
+    const cost = Math.floor(1100 + (labLevel * 270))
     if (resources >= cost) {
       setResources(resources - cost)
       setLabLevel(labLevel + 1)
@@ -119,7 +119,7 @@ function App() {
   }
 
   const upgradeTower = () => {
-    const cost = Math.floor(1750 + (towerLevel * 420))
+    const cost = Math.floor(1850 + (towerLevel * 450))
     if (resources >= cost) {
       setResources(resources - cost)
       setTowerLevel(towerLevel + 1)
@@ -130,7 +130,7 @@ function App() {
   }
 
   const upgradeVault = () => {
-    const cost = Math.floor(2450 + (vaultLevel * 620))
+    const cost = Math.floor(2550 + (vaultLevel * 650))
     if (resources >= cost) {
       setResources(resources - cost)
       setVaultLevel(vaultLevel + 1)
@@ -141,19 +141,19 @@ function App() {
   }
 
   const prestigeReset = () => {
-    if (resources < 400000) {
-      alert("You need at least 400,000 resources to prestige!")
+    if (resources < 450000) {
+      alert("You need at least 450,000 resources to prestige!")
       return
     }
     if (window.confirm("Prestige will reset all buildings but give you stronger permanent bonuses. Continue?")) {
       setPrestige(prev => prev + 1)
-      setResources(15000)
+      setResources(18000)
       setMineLevel(1)
       setFarmLevel(0)
       setLabLevel(0)
       setTowerLevel(0)
       setVaultLevel(0)
-      alert(`🌟 Prestige ${prestige + 1} achieved! You are building a massive empire!`)
+      alert(`🌟 Prestige ${prestige + 1} achieved! You are unstoppable!`)
     }
   }
 
@@ -249,7 +249,7 @@ function App() {
         </div>
 
         <div className="text-center text-xs text-gray-500 mt-16">
-          Commit 48/100 • Halfway to 100! Keep going!
+          Commit 48/100 • Keep pushing for 100 commits!
         </div>
       </div>
     </div>
