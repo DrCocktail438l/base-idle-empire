@@ -78,7 +78,7 @@ function App() {
   }
 
   const claimResources = () => {
-    const production = Math.floor((mineLevel * 98) + (farmLevel * 88) + (labLevel * 105) + (towerLevel * 182) + (vaultLevel * 135))
+    const production = Math.floor((mineLevel * 98) + (farmLevel * 88) + (labLevel * 105) + (towerLevel * 182) + (vaultLevel * 138))
     const newResources = resources + production
     setResources(newResources)
     setTotalClaimed(prev => prev + production)
@@ -86,7 +86,7 @@ function App() {
   }
 
   const upgradeMine = () => {
-    const cost = Math.floor(410 + (mineLevel * 210))
+    const cost = Math.floor(410 + (mineLevel * 220))
     if (resources >= cost) {
       setResources(resources - cost)
       setMineLevel(mineLevel + 1)
@@ -97,7 +97,7 @@ function App() {
   }
 
   const upgradeFarm = () => {
-    const cost = Math.floor(550 + (farmLevel * 240))
+    const cost = Math.floor(560 + (farmLevel * 240))
     if (resources >= cost) {
       setResources(resources - cost)
       setFarmLevel(farmLevel + 1)
@@ -108,7 +108,7 @@ function App() {
   }
 
   const upgradeLab = () => {
-    const cost = Math.floor(1150 + (labLevel * 280))
+    const cost = Math.floor(1200 + (labLevel * 280))
     if (resources >= cost) {
       setResources(resources - cost)
       setLabLevel(labLevel + 1)
@@ -249,7 +249,7 @@ function App() {
         </div>
 
         <div className="text-center text-xs text-gray-500 mt-16">
-          Commit 49/100 • Almost at 50 commits!
+          🎉 Commit 50/100 • Big milestone reached! Great job!
         </div>
       </div>
     </div>
