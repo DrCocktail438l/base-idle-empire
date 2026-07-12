@@ -86,7 +86,7 @@ function App() {
   }
 
   const upgradeMine = () => {
-    const cost = Math.floor(420 + (mineLevel * 220))
+    const cost = Math.floor(400 + (mineLevel * 220))
     if (resources >= cost) {
       setResources(resources - cost)
       setMineLevel(mineLevel + 1)
@@ -108,7 +108,7 @@ function App() {
   }
 
   const upgradeLab = () => {
-    const cost = Math.floor(1250 + (labLevel * 290))
+    const cost = Math.floor(1200 + (labLevel * 280))
     if (resources >= cost) {
       setResources(resources - cost)
       setLabLevel(labLevel + 1)
@@ -153,7 +153,7 @@ function App() {
       setLabLevel(0)
       setTowerLevel(0)
       setVaultLevel(0)
-      alert(`🌟 Prestige ${prestige + 1} achieved! Epic empire building!`)
+      alert(`🌟 Prestige ${prestige + 1} achieved! You are a Base legend!`)
     }
   }
 
@@ -249,7 +249,7 @@ function App() {
         </div>
 
         <div className="text-center text-xs text-gray-500 mt-16">
-          Commit 51/100 • Halfway to the goal! Keep going!
+          Commit 51/100 • The empire keeps growing!
         </div>
       </div>
     </div>
