@@ -153,7 +153,7 @@ function App() {
       setLabLevel(0)
       setTowerLevel(0)
       setVaultLevel(0)
-      alert(`🌟 Prestige ${prestige + 1} achieved! You are a true Base legend!`)
+      alert(`🌟 Prestige ${prestige + 1} achieved! You are a Base legend!`)
     }
   }
 
