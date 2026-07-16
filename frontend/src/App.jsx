@@ -153,7 +153,7 @@ function App() {
       setLabLevel(0)
       setTowerLevel(0)
       setVaultLevel(0)
-      alert(`🌟 Prestige ${prestige + 1} achieved! You are a Base legend!`)
+      alert(`🌟 Prestige ${prestige + 1} achieved! You are a true Base legend!`)
     }
   }
 
@@ -249,7 +249,7 @@ function App() {
         </div>
 
         <div className="text-center text-xs text-gray-500 mt-16">
-          Commit 52/100 • The empire keeps expanding!
+        
         </div>
       </div>
     </div>
