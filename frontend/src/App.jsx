@@ -108,7 +108,7 @@ function App() {
   }
 
   const upgradeLab = () => {
-    const cost = Math.floor(1300 + (labLevel * 300))
+    const cost = Math.floor(1300 + (labLevel * 290))
     if (resources >= cost) {
       setResources(resources - cost)
       setLabLevel(labLevel + 1)
@@ -153,7 +153,7 @@ function App() {
       setLabLevel(0)
       setTowerLevel(0)
       setVaultLevel(0)
-      alert(`🌟 Prestige ${prestige + 1} achieved! You are a true Base legend!`)
+      alert(`🌟 Prestige ${prestige + 1} achieved! Massive empire!`)
     }
   }
 
@@ -249,7 +249,7 @@ function App() {
         </div>
 
         <div className="text-center text-xs text-gray-500 mt-16">
-          Commit 53/100 • Steady progress!
+          Commit 54/100 • Steady progress!
         </div>
       </div>
     </div>
