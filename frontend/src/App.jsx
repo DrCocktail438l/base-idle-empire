@@ -78,7 +78,7 @@ function App() {
   }
 
   const claimResources = () => {
-    const production = Math.floor((mineLevel * 100) + (farmLevel * 90) + (labLevel * 108) + (towerLevel * 188) + (vaultLevel * 142))
+    const production = Math.floor((mineLevel * 100) + (farmLevel * 90) + (labLevel * 110) + (towerLevel * 188) + (vaultLevel * 145))
     const newResources = resources + production
     setResources(newResources)
     setTotalClaimed(prev => prev + production)
@@ -97,7 +97,7 @@ function App() {
   }
 
   const upgradeFarm = () => {
-    const cost = Math.floor(580 + (farmLevel * 250))
+    const cost = Math.floor(590 + (farmLevel * 250))
     if (resources >= cost) {
       setResources(resources - cost)
       setFarmLevel(farmLevel + 1)
@@ -108,7 +108,7 @@ function App() {
   }
 
   const upgradeLab = () => {
-    const cost = Math.floor(1300 + (labLevel * 290))
+    const cost = Math.floor(1350 + (labLevel * 300))
     if (resources >= cost) {
       setResources(resources - cost)
       setLabLevel(labLevel + 1)
@@ -141,19 +141,19 @@ function App() {
   }
 
   const prestigeReset = () => {
-    if (resources < 550000) {
-      alert("You need at least 550,000 resources to prestige!")
+    if (resources < 600000) {
+      alert("You need at least 600,000 resources to prestige!")
       return
     }
     if (window.confirm("Prestige will reset all buildings but give you stronger permanent bonuses. Continue?")) {
       setPrestige(prev => prev + 1)
-      setResources(22000)
+      setResources(25000)
       setMineLevel(1)
       setFarmLevel(0)
       setLabLevel(0)
       setTowerLevel(0)
       setVaultLevel(0)
-      alert(`🌟 Prestige ${prestige + 1} achieved! Massive empire!`)
+      alert(`🌟 Prestige ${prestige + 1} achieved! You are dominating Base!`)
     }
   }
 
@@ -249,7 +249,7 @@ function App() {
         </div>
 
         <div className="text-center text-xs text-gray-500 mt-16">
-          Commit 54/100 • Steady progress!
+          Commit 55/100 • Halfway to 100!
         </div>
       </div>
     </div>
