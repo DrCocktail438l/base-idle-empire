@@ -249,7 +249,7 @@ function App() {
         </div>
 
         <div className="text-center text-xs text-gray-500 mt-16">
-          Commit 55/100 • Halfway to 100!
+          Commit 56/100 • The empire keeps expanding!
         </div>
       </div>
     </div>
